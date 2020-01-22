@@ -13,7 +13,7 @@
             <div class="alert alert-danger alert-none" role="alert"></div>
             <div class="alert alert-success alert-none" role="alert"></div>
 
-
+<!--Фак фак фак-->
             <div class="form-group row">
                 <label class="col-lg-4 col-form-label">Логин</label>
                 <div class="col-lg-8 col-xl-6">
