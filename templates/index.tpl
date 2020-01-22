@@ -105,7 +105,7 @@ global $name_page;
                         </li>
                         <li id="list_li_1" class="menu_control <?php if ($_GET['tab'] == "users") {
                             echo "menu_active";
-                        } ?>">
+                        } ?>">dsdfs
                             <a class="parse_db tab_a" href="?tab=users">
                                 Пользователи
                             </a>
