@@ -288,6 +288,7 @@ function generatePass($number=7){
 
 
 function datetime_format($string) {
+    global $settings;
     $monn = array(
         '',
         "января",
@@ -303,6 +304,7 @@ function datetime_format($string) {
         "ноября",
         "декабря"
     );
+    $string = date("Y-m-d H:i:s",strtotime($string)+($settings['settings']['time_zone']*60*60));
 
     $a = preg_split("/[^\d]/",$string);
     $today = date('Ymd');
