@@ -252,6 +252,7 @@ $(function() {
 	});
 
 
+
 	$(document).on('click','.icon_table_message', function () {
 		var uid = $(this).attr("data-id");
 		Swal.fire({
@@ -292,7 +293,80 @@ $(function() {
 		});
 	});
 
+	$(document).on('click','.icons_favorites', function () {
+		var uid = $(this).attr("data-id");
+		$.ajax({type: "POST",url: "/ajax/profile",data: "action=add-favorites&id="+uid,dataType: "html",cache: false,
+			success: function (data) {
+				var res = JSON.parse(data);
+				if(res.status == true){
+					swalWithBootstrapButtons.fire(
+						'Перенесен!',
+						res.message,
+						'success'
+					);
+				}else{
+					swalWithBootstrapButtons.fire(
+						'Cancelled',
+						res.message,
+						'error'
+					);
+				}
+			}
+		});
+	});
+	$(document).on('click','.icons_black_list', function () {
+		var uid = $(this).attr("data-id");
+		swalWithBootstrapButtons.fire({
+			title: 'Вы хотите перенести домен в черный список?',
+			text: "Нажмите на пустое место, чтобы выйти отсюда.",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'По домену',
+			cancelButtonText: 'По номеру',
+			reverseButtons: true
+		}).then((result) => {
+			if (result.value) {
 
+				$.ajax({type: "POST",url: "/ajax/admin",data: "action=add-black-list&id="+uid+"&type=domain",dataType: "html",cache: false,
+					success: function (data) {
+						if(data == true){
+							$('#item_'+uid).css({'background':'#a74c4c'});
+							swalWithBootstrapButtons.fire(
+								'Перенесен!',
+								'Домен успешно добавлен в черный список',
+								'success'
+							);
+						}else{
+							swalWithBootstrapButtons.fire(
+								'Cancelled',
+								data,
+								'error'
+							);
+						}
+					}
+				});
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				$.ajax({type: "POST",url: "/ajax/admin",data: "action=add-black-list&id="+uid+"&type=number",dataType: "html",cache: false,
+					success: function (data) {
+						if(data == true){
+							$('#item_'+uid).css({'background':'#a74c4c'});
+							swalWithBootstrapButtons.fire(
+								'Перенесен!',
+								'Номер успешно добавлен в черный список',
+								'success'
+							);
+						}else{
+							swalWithBootstrapButtons.fire(
+								'Cancelled',
+								data,
+								'error'
+							);
+						}
+					}
+				});
+			}
+		});
+	});
 /*	$('#search_domais').on('keyup', function(e) {
 		var text = $(this).val();
 		console.log(text);

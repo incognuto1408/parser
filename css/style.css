@@ -665,6 +665,16 @@ td a{
 .icons_ula{
 	background: url(/files/icons/ula.png) no-repeat;
 }
+.icons_black_list{
+	background: url(/files/icons/black_list.svg) no-repeat center;
+/*	border-radius: 50%;
+	background-size: 79%;
+	box-shadow: inset 0 0 7px #1b2a3a;*/
+}
+.icons_favorites{
+	background: url(/files/icons/favorites.svg) no-repeat center;
+	top: 48px;
+}
 .icon_message{
 	background: url('/files/icons/mailicon_gray.png') no-repeat; background-size: 100%;
 }
@@ -688,6 +698,10 @@ td a{
 	float: left;
 	width: 17px;
 	height: 60px;
+}
+.right_block{
+	float: left;
+	width: 27px;
 }
 .pagination{
 	display: inline-block;
@@ -713,7 +727,7 @@ tr:nth-child(2n)> td {
 .link_style{
 	float: left;
 	margin-left: 2px;
-	padding: 13px;
+	padding: 11px;
 	display: table-row;
 	-moz-background-size: 100%;
 	-webkit-background-size: 100%;

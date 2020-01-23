@@ -2,6 +2,33 @@
 
 if(isAjax() == true) {
 
+    if ($_POST["action"] == "add-black-list") {
+        $sql = db_query("SELECT * FROM all_list_domain WHERE id=".$_POST['id']);
+        if($sql) {
+            $where = $_POST['type'] == 'domain' ? "domain='".$sql['domain_name']."'" : "number='".$sql['phone_number']."'";
+            $ins_name = 'domain';
+            if($_POST['type'] == 'domain'){
+                $ins = $sql['domain_name'];
+            }else {
+                $ins = $sql['phone_number'];
+                $ins_name = "number";
+            }
+            $sql_black_list = db_query("SELECT * FROM black_list_domain WHERE $where");
+            if(!$sql_black_list){
+                $insert = db_insert_update("INSERT INTO black_list_domain($ins_name)VALUES('$ins')");
+                if($insert){
+                    echo true;
+                }else{
+                    echo "Ошибка добавления!".$_POST['type'].$insert.$ins;
+                }
+//                $ins_res =  db_insert_update("INSERT INTO message_reply(recipient, code, campaignId, messageId, status, message, phone, domain, datetime_send, request_type, sender_name)VALUES('" . $document['data']['recipient'] . "', '" . $document['code'] . "', '" . $document['data']['campaignId'] . "', '" . $document['data']['messageId'] . "', '" . $document['data']['status'] . "', '" . $document['message'] . "', " . $query['phone_number'] . ", '" . $query['domain_name'] . "', now(), 'USER', '".$_SESSION['profile']['login']."')");
+            }else{
+                echo "Уже есть в базе!";
+            }
+        }else{
+            echo "Данного домена не существует!";
+        }
+    }
     if ($_POST["action"] == "info") {
         //echo "Hello world ".$_POST['text']." ".$_POST['id'];
         $arr_res = [

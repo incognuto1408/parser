@@ -136,6 +136,7 @@ $result_logon = db_query_while("SELECT * FROM all_list_domain $where $show $sear
             <td>Город</td>
             <td>Адресс</td>
             <td>Кто выдал</td>
+            <td></td>
         </tr>
     </thead>
     <tbody>
@@ -153,7 +154,7 @@ $result_logon = db_query_while("SELECT * FROM all_list_domain $where $show $sear
             $name = $item['organization_name'];
         }
     ?>
-    <tr <?php echo $bgr;?>>
+    <tr <?php echo $bgr;?> id="item_<?php echo $item['id']; ?>">
         <td style="position: relative; border-width: 1px 0px 1px 1px !important">
             <div class="left_block">
 
@@ -199,8 +200,13 @@ $result_logon = db_query_while("SELECT * FROM all_list_domain $where $show $sear
         <td>
             <?php echo $item['street_address'];?>
         </td>
-        <td>
+        <td style="position: relative; border-width: 1px 0px 1px 1px !important;">
             <?php echo $item['registar_created'];?>
+        </td>
+        <td  style="position: relative; border-width: 1px 0px 1px 0px !important;">
+            <div class="right_block"></div>
+            <span class="icon_table icons_black_list" data-id="<?php echo $item['id']; ?>"></span>
+            <span class="icon_table icons_favorites" data-id="<?php echo $item['id']; ?>"></span>
         </td>
       </tr>
 <?php

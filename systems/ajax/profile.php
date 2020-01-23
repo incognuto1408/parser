@@ -1,6 +1,32 @@
 <?php
 if(isAjax() == true) {
 
+    if ($_POST["action"] == "add-favorites") {
+        $res = [
+            'status' => 0,
+            'message' => "",
+        ];
+        $sql_all = db_query("SELECT * FROM all_list_domain WHERE id=".$_POST['id']);
+        $sql = db_query("SELECT * FROM favorites WHERE domain='".$sql_all['domain_name']."'");
+        if(!$sql){
+            $insert = db_insert_update("INSERT INTO favorites(id_user, domain, datetime_add)VALUES('".$_SESSION['profile']['id']."', '".$sql_all['domain_name']."', now())");
+            if($insert){
+                $res['status'] = 1;
+                $res['message'] = "Домен успешно добавлен в избранное";
+            }else{
+                $res['message'] = "Ошибка добавления!";
+            }
+        }else{
+            $delete = db_insert_update("DELETE FROM favorites WHERE id='".$sql['id']."'");
+            if($delete){
+                $res['status'] = 1;
+                $res['message'] = "Домен успешно удален из избранного!";
+            }else{
+                $res['message'] = "Ошибка удаления!";
+            }
+        }
+        echo json_encode($res);
+    }
     if ($_POST["action"] == "reg") {
 
         $error = array();
