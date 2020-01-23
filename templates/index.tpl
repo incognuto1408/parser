@@ -103,6 +103,13 @@ global $name_page;
                                 Черный список
                             </a>
                         </li>
+                        <li id="list_li_1" class="menu_control <?php if ($_GET['tab'] == "favorites") {
+                            echo "menu_active";
+                        } ?>">
+                            <a class="parse_db tab_a" href="?tab=favorites">
+                                Избранное
+                            </a>
+                        </li>
                         <li id="list_li_1" class="menu_control <?php if ($_GET['tab'] == "users") {
                             echo "menu_active";
                         } ?>">
@@ -179,6 +186,7 @@ global $name_page;
                         "add-user" => "route/add-user.php",
                         "metrics" => "route/metrics_list.php",
                         "black-list" => "route/black-list.php",
+                        "favorites" => "route/favorites.php",
                     ];
                     if (!empty($_GET['tab'])) {
                         $page = $routing[$_GET['tab']];
