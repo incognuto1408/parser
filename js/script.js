@@ -314,6 +314,48 @@ $(function() {
 			}
 		});
 	});
+	$(document).on('click','.icon_phones', function () {
+		var uid = $(this).attr("data-id");
+		$.ajax({type: "POST",url: "/ajax/admin",data: "action=get-fones&id="+uid,dataType: "html",cache: false,
+			success: function (data) {
+				Swal.fire({
+					title: 'Изменить комментарий',
+					input: 'text',
+					inputAttributes: {
+						autocapitalize: 'off'
+					},
+					text: "В прошлом звонке: "+data,
+					showCancelButton: true,
+					confirmButtonText: 'Изменить',
+					showLoaderOnConfirm: true,
+					preConfirm: (text) => {
+						return $.ajax({
+							type: "POST",url: "ajax/admin",data: "action=add-phones&id="+uid+"&text="+text,dataType: "html",cache: false,
+							success: function (data) {
+								return data;
+							}
+						});
+					},
+					allowOutsideClick: () => !Swal.isLoading()
+				}).then((result) => {
+					console.log(result);
+					var res = JSON.parse(result.value);
+					if (res.status) {
+						Swal.fire({
+							title: "Комментарий к звонку оставлен",
+							imageUrl: "https://hoster.kz/pic/hoster_logo_old.png"
+						});
+					}else{
+						swalWithBootstrapButtons.fire(
+							'Ошибка',
+							res.error_text,
+							'error'
+						);
+					}
+				});
+			}
+		});
+	});
 	$(document).on('click','.icons_black_list', function () {
 		var uid = $(this).attr("data-id");
 		swalWithBootstrapButtons.fire({

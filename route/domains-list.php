@@ -161,7 +161,7 @@ $result_logon = db_query_while("SELECT * FROM all_list_domain $where $show $sear
             </div>
 
             <span class="icon_table icon_table_message <?php echo $item['message_sent'] == 1 ? "icon_message_active" : "icon_message"; ?>" data-id="<?php echo $item['id']; ?>"></span>
-            <span class="icon_table <?php echo strlen(trim($item['comment_call'])) > 0 ? "icon_phone_active" : "icon_phone"; ?>"></span>
+            <span class="icon_table icon_phones <?php echo strlen(trim($item['comment_call'])) > 0 ? "icon_phone_active" : "icon_phone"; ?>" data-id="<?php echo $item['id']; ?>"></span>
             <?php
             if($item['send_message'] == 0)
                 echo '<span class="badge-pulse-blue" title="Рассылка была отключена."></span>';

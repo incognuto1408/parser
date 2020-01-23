@@ -2,6 +2,23 @@
 
 if(isAjax() == true) {
 
+    if ($_POST["action"] == "get-fones") {
+        $sql = db_query("SELECT * FROM all_list_domain WHERE id=".$_POST['id']);
+        echo $sql['comment_call'];
+    }
+    if ($_POST["action"] == "add-phones") {
+        $arr_res = [
+            "status" => 0,
+            "error_text" => "Ошибок нет"
+        ];
+        $upd_res = db_insert_update("UPDATE all_list_domain SET comment_call='" . $_POST['text'] . "' WHERE id={$_POST['id']}");
+        if($upd_res){
+            $arr_res['status'] = 1;
+        }else{
+            $arr_res['error_text'] = "Неизвестная ошибка!";
+        }
+        echo json_encode($arr_res);
+    }
     if ($_POST["action"] == "add-black-list") {
         $sql = db_query("SELECT * FROM all_list_domain WHERE id=".$_POST['id']);
         if($sql) {
@@ -14,14 +31,13 @@ if(isAjax() == true) {
                 $ins_name = "number";
             }
             $sql_black_list = db_query("SELECT * FROM black_list_domain WHERE $where");
-            if(!$sql_black_list){
+            if(!$sql_black_list) {
                 $insert = db_insert_update("INSERT INTO black_list_domain($ins_name)VALUES('$ins')");
-                if($insert){
+                if ($insert) {
                     echo true;
-                }else{
-                    echo "Ошибка добавления!".$_POST['type'].$insert.$ins;
+                } else {
+                    echo "Ошибка добавления!" . $_POST['type'] . $insert . $ins;
                 }
-//                $ins_res =  db_insert_update("INSERT INTO message_reply(recipient, code, campaignId, messageId, status, message, phone, domain, datetime_send, request_type, sender_name)VALUES('" . $document['data']['recipient'] . "', '" . $document['code'] . "', '" . $document['data']['campaignId'] . "', '" . $document['data']['messageId'] . "', '" . $document['data']['status'] . "', '" . $document['message'] . "', " . $query['phone_number'] . ", '" . $query['domain_name'] . "', now(), 'USER', '".$_SESSION['profile']['login']."')");
             }else{
                 echo "Уже есть в базе!";
             }
