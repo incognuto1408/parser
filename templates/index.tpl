@@ -82,6 +82,13 @@ global $name_page;
                 if(!empty($_SESSION['profile']['id'])) {
                     ?>
                     <ul class="list">
+                        <li id="list_li_1" class="menu_control <?php if ($_GET['tab'] == "statistics") {
+                            echo "menu_active";
+                        } ?>">
+                            <a class="parse_db tab_a" href="?tab=statistics">
+                                Главная
+                            </a>
+                        </li>
                         <li id="list_li_1" class="menu_control <?php if ($_GET['tab'] == "profile") {
                             echo "menu_active";
                         } ?>">
@@ -187,6 +194,7 @@ global $name_page;
                         "metrics" => "route/metrics_list.php",
                         "black-list" => "route/black-list.php",
                         "favorites" => "route/favorites.php",
+                        "statistics" => "route/statistics.php",
                     ];
                     if (!empty($_GET['tab'])) {
                         $page = $routing[$_GET['tab']];
